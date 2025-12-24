@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="GroceryStore 1"
+  DTS:DTSID="{BE234A39-35E2-4ECA-8435-77E99DD9CC0B}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=DESKTOP-R92IV14\FULLBIPROJECT;Initial Catalog=GroceryStore;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{BE234A39-35E2-4ECA-8435-77E99DD9CC0B}DESKTOP-R92IV14\FULLBIPROJECT;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

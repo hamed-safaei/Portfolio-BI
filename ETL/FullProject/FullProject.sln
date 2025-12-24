@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "BikeStore", "FullProject\BikeStore.dtproj", "{FEE90E92-FA89-45B1-8BB7-F3CA651ADDE1}"
+EndProject
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "GrocceryStore", "test2\GrocceryStore.dtproj", "{4317346D-02A4-4995-B56B-36EE30F8274F}"
+EndProject
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "StageDB", "StageDB\StageDB.dtproj", "{D2CABC0A-A7D0-4396-BCE5-0D030134CB6B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7BB6DB3F-71ED-40C0-912B-ED3FCB1ED000}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FEE90E92-FA89-45B1-8BB7-F3CA651ADDE1}.Development|Default.ActiveCfg = Development
+		{FEE90E92-FA89-45B1-8BB7-F3CA651ADDE1}.Development|Default.Build.0 = Development
+		{4317346D-02A4-4995-B56B-36EE30F8274F}.Development|Default.ActiveCfg = Development
+		{4317346D-02A4-4995-B56B-36EE30F8274F}.Development|Default.Build.0 = Development
+		{D2CABC0A-A7D0-4396-BCE5-0D030134CB6B}.Development|Default.ActiveCfg = Development
+		{D2CABC0A-A7D0-4396-BCE5-0D030134CB6B}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {08573E71-AA94-4769-B27B-E26B84B2E757}
+	EndGlobalSection
+EndGlobal
