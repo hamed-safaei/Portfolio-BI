@@ -2,18 +2,28 @@
 <BuildLog xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ProjectInfo>
     <Name>StageDB</Name>
-    <LastWriteTime>2025-12-24T14:27:44.7991579Z</LastWriteTime>
+    <LastWriteTime>2025-12-30T15:50:31.0230216Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
     <ProjectBuildItemInfo>
-      <Name>Package1.dtsx</Name>
-      <LastWriteTime>2025-12-22T14:21:38.3825439Z</LastWriteTime>
+      <Name>stg_bikestore_customer.dtsx</Name>
+      <LastWriteTime>2025-12-26T08:57:07.5083144Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
-      <Name>stg_bikestore_customer.dtsx</Name>
-      <LastWriteTime>2025-12-24T16:18:55.6262175Z</LastWriteTime>
+      <Name>stg_bikestore_product.dtsx</Name>
+      <LastWriteTime>2025-12-26T10:47:20.1335064Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>stg_bikestore_staff.dtsx</Name>
+      <LastWriteTime>2025-12-27T14:15:13.5645846Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>stg_bikestore_FactSales.dtsx</Name>
+      <LastWriteTime>2025-12-30T15:53:45.1597288Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>

@@ -11,36 +11,10 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="stg_bikestore_customer"
   DTS:PackageType="5"
-  DTS:VersionBuild="24"
-  DTS:VersionGUID="{2F598A6B-92C1-46DA-A857-B0478EB0F832}">
+  DTS:VersionBuild="27"
+  DTS:VersionGUID="{D566A8BF-0026-4357-A940-73512CA26C8E}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[BikeStore]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{739CE111-8D4E-452C-809E-EDCD0345BCFA}"
-      DTS:ObjectName="BikeStore">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=DESKTOP-R92IV14\FULLBIPROJECT;Initial Catalog=BikeStore;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-stg_bikestore_customer-{739CE111-8D4E-452C-809E-EDCD0345BCFA}DESKTOP-R92IV14\FULLBIPROJECT;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[StageDB]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{A724686B-3215-46D3-937C-F15C1941CFC4}"
-      DTS:ObjectName="StageDB">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=DESKTOP-R92IV14\FULLBIPROJECT;Initial Catalog=StageDB;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-stg_bikestore_customer-{A724686B-3215-46D3-937C-F15C1941CFC4}DESKTOP-R92IV14\FULLBIPROJECT;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-  </DTS:ConnectionManagers>
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
@@ -252,8 +226,8 @@
               <connections>
                 <connection
                   refId="Package\Extract\Extrace Customers.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[BikeStore]"
-                  connectionManagerRefId="Package.ConnectionManagers[BikeStore]"
+                  connectionManagerID="{739CE111-8D4E-452C-809E-EDCD0345BCFA}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[BikeStore]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -558,8 +532,8 @@
               <connections>
                 <connection
                   refId="Package\Extract\Load Customers.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[StageDB]"
-                  connectionManagerRefId="Package.ConnectionManagers[StageDB]"
+                  connectionManagerID="{A724686B-3215-46D3-937C-F15C1941CFC4}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[StageDB]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -793,13 +767,17 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="111.2,41.6"
-          Id="Package\Extract"
-          TopLeft="345.714286450221,287.529411512675" />
-        <NodeLayout
           Size="114.4,41.6"
           Id="Package\BatchId"
           TopLeft="239.285714795091,185.823529248883" />
+        <NodeLayout
+          Size="138.4,41.6"
+          Id="Package\Delete Batch"
+          TopLeft="97.1428573496487,76.4705881682647" />
+        <NodeLayout
+          Size="111.2,41.6"
+          Id="Package\Extract"
+          TopLeft="345.714286450221,287.529411512675" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="296.485714795091,227.423529248883">
@@ -834,10 +812,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="138.4,41.6"
-          Id="Package\Delete Batch"
-          TopLeft="97.1428573496487,76.4705881682647" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
           TopLeft="166.342857349649,118.070588168265">
@@ -881,39 +855,43 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="166.4,41.6"
-          Id="Package\Extract\Extrace Customers"
-          TopLeft="181.428571814785,53.5294117177853" />
+          Size="153.6,41.6"
+          Id="Package\Extract\Load Customers"
+          TopLeft="151.428571750923,311.235293844837" />
         <NodeLayout
           Size="152.8,41.6"
           Id="Package\Extract\Derived Column"
-          TopLeft="337.857143576352,167.4705880885" />
+          TopLeft="215.000000457679,172.823529260278" />
+        <NodeLayout
+          Size="166.4,41.6"
+          Id="Package\Extract\Extrace Customers"
+          TopLeft="181.428571814785,53.5294117177853" />
         <EdgeLayout
           Id="Package\Extract.Paths[OLE DB Source Output]"
           TopLeft="264.628571814785,95.1294117177853">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="149.628571761567,72.3411763707144"
+              EndConnector="26.7714286428936,77.6941175424929"
               Start="0,0"
-              End="149.628571761567,64.8411763707144">
+              End="26.7714286428936,70.1941175424929">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,32.1705881853572" />
+                    End="0,34.8470587712465" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,32.1705881853572"
-                    Point2="0,36.1705881853572"
-                    Point3="4,36.1705881853572" />
+                    Point1="0,34.8470587712465"
+                    Point2="0,38.8470587712465"
+                    Point3="4,38.8470587712465" />
                   <mssgle:LineSegment
-                    End="145.628571761567,36.1705881853572" />
+                    End="22.7714286428936,38.8470587712465" />
                   <mssgle:CubicBezierSegment
-                    Point1="145.628571761567,36.1705881853572"
-                    Point2="149.628571761567,36.1705881853572"
-                    Point3="149.628571761567,40.1705881853572" />
+                    Point1="22.7714286428936,38.8470587712465"
+                    Point2="26.7714286428936,38.8470587712465"
+                    Point3="26.7714286428936,42.8470587712465" />
                   <mssgle:LineSegment
-                    End="149.628571761567,64.8411763707144" />
+                    End="26.7714286428936,70.1941175424929" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -922,36 +900,32 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="153.6,41.6"
-          Id="Package\Extract\Load Customers"
-          TopLeft="302.857143501846,341.823529112143" />
         <EdgeLayout
           Id="Package\Extract.Paths[Derived Column Output]"
-          TopLeft="414.257143576352,209.0705880885">
+          TopLeft="291.400000457679,214.423529260278">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-34.6000000745059,132.752941023644"
+              EndConnector="-63.1714287067559,96.811764584559"
               Start="0,0"
-              End="-34.6000000745059,125.252941023644">
+              End="-63.1714287067559,89.311764584559">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,62.3764705118218" />
+                    End="0,44.4058822922795" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,62.3764705118218"
-                    Point2="0,66.3764705118218"
-                    Point3="-4,66.3764705118218" />
+                    Point1="0,44.4058822922795"
+                    Point2="0,48.4058822922795"
+                    Point3="-4,48.4058822922795" />
                   <mssgle:LineSegment
-                    End="-30.6000000745059,66.3764705118218" />
+                    End="-59.1714287067559,48.4058822922795" />
                   <mssgle:CubicBezierSegment
-                    Point1="-30.6000000745059,66.3764705118218"
-                    Point2="-34.6000000745059,66.3764705118218"
-                    Point3="-34.6000000745059,70.3764705118218" />
+                    Point1="-59.1714287067559,48.4058822922795"
+                    Point2="-63.1714287067559,48.4058822922795"
+                    Point3="-63.1714287067559,52.4058822922795" />
                   <mssgle:LineSegment
-                    End="-34.6000000745059,125.252941023644" />
+                    End="-63.1714287067559,89.311764584559" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -964,14 +938,6 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Extract\Extrace Customers">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Extract\Load Customers">
     <Properties>
       <Property>
@@ -981,6 +947,14 @@
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Extract\Extrace Customers">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

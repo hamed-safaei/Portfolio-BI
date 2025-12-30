@@ -2,13 +2,33 @@
 <BuildLog xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ProjectInfo>
     <Name>BikeStore</Name>
-    <LastWriteTime>2025-12-24T15:43:26.4769506Z</LastWriteTime>
+    <LastWriteTime>2025-12-30T15:50:32.660563Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
     <ProjectBuildItemInfo>
       <Name>dim_customers.dtsx</Name>
-      <LastWriteTime>2025-12-24T16:13:55.787964Z</LastWriteTime>
+      <LastWriteTime>2025-12-26T09:27:42.4192152Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>dim_products.dtsx</Name>
+      <LastWriteTime>2025-12-26T11:08:27.997154Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>dim_store.dtsx</Name>
+      <LastWriteTime>2025-12-27T15:35:10.2329438Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>dim_staffs.dtsx</Name>
+      <LastWriteTime>2025-12-27T17:47:22.2126303Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>fact_sales.dtsx</Name>
+      <LastWriteTime>2025-12-30T17:05:59.1484215Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>

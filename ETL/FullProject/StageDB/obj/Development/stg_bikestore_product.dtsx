@@ -1,59 +1,38 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
-  DTS:CreationDate="12/22/2025 5:26:52 PM"
+  DTS:CreationDate="12/26/2025 11:20:31 AM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="DESKTOP-R92IV14"
   DTS:CreatorName="DESKTOP-R92IV14\hamed"
-  DTS:DTSID="{4ED9ECDE-9ADA-41C5-AFF2-FBCD55667B3A}"
+  DTS:DTSID="{4C5656EC-6B9F-4993-8079-36A3A7C2DB7D}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="16.0.5685.0"
   DTS:LocaleID="1033"
-  DTS:ObjectName="stg_bikestore_customer"
+  DTS:ObjectName="stg_bikestore_product"
   DTS:PackageType="5"
-  DTS:VersionBuild="27"
-  DTS:VersionGUID="{D566A8BF-0026-4357-A940-73512CA26C8E}">
+  DTS:VersionBuild="10"
+  DTS:VersionGUID="{70D28197-3AFE-4C1B-854D-BC260BB62143}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{670CEA5E-E2A7-4E39-A771-2E8CACE6A8CB}"
-      DTS:IncludeInDebugDump="6789"
+      DTS:DTSID="{05BCB77C-540D-4B3A-8501-045E2171AAB9}"
+      DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
-      DTS:ObjectName="batchid">
+      DTS:ObjectName="GetBatchid">
       <DTS:VariableValue
-        DTS:DataType="20">1</DTS:VariableValue>
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
     </DTS:Variable>
   </DTS:Variables>
   <DTS:Executables>
     <DTS:Executable
-      DTS:refId="Package\BatchId"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{3BB62D48-B2B3-4B57-BF31-5C8318161C1C}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="BatchId"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{A724686B-3215-46D3-937C-F15C1941CFC4}"
-          SQLTask:SqlStatementSource="DECLARE @NewBatchID BIGINT;&#xA;&#xA;IF NOT EXISTS (SELECT 1 FROM stg_bikestore_customer)&#xA;    SET @NewBatchID = 1;&#xA;ELSE&#xA;    SELECT @NewBatchID = MAX(batch_id) + 1 FROM stg_bikestore_customer;&#xA;&#xA;SELECT @NewBatchID AS NewBatchID;&#xA;"
-          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
-          <SQLTask:ResultBinding
-            SQLTask:ResultName="0"
-            SQLTask:DtsVariableName="User::batchid" />
-        </SQLTask:SqlTaskData>
-      </DTS:ObjectData>
-    </DTS:Executable>
-    <DTS:Executable
       DTS:refId="Package\Delete Batch"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{7ED70214-C0AB-4A72-A825-9B4BE23043B6}"
+      DTS:DTSID="{EB13F06E-C094-4E12-9100-5EA79B3882DA}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Delete Batch"
@@ -63,14 +42,14 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{A724686B-3215-46D3-937C-F15C1941CFC4}"
-          SQLTask:SqlStatementSource="DELETE FROM stg_bikestore_customer&#xA;WHERE load_datetime &lt; DATEADD(DAY, -10, GETDATE());&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="DELETE FROM bikestore.stg_product&#xA;WHERE load_datetime &lt;= DATEADD(DAY , -10 , GETDATE())" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Extract"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{D670FC50-2546-4113-AE0A-5D045624A33B}"
+      DTS:DTSID="{91252157-CAEC-41E2-B31F-9441F65CBA3A}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="Extract"
@@ -126,25 +105,25 @@
                       </properties>
                     </outputColumn>
                     <outputColumn
-                      refId="Package\Extract\Derived Column.Outputs[Derived Column Output].Columns[batchid]"
+                      refId="Package\Extract\Derived Column.Outputs[Derived Column Output].Columns[batch_id]"
                       dataType="i8"
                       errorOrTruncationOperation="Computation"
                       errorRowDisposition="FailComponent"
-                      lineageId="Package\Extract\Derived Column.Outputs[Derived Column Output].Columns[batchid]"
-                      name="batchid"
+                      lineageId="Package\Extract\Derived Column.Outputs[Derived Column Output].Columns[batch_id]"
+                      name="batch_id"
                       truncationRowDisposition="FailComponent">
                       <properties>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">(DT_I8)@[User::batchid]</property>
+                          name="Expression">(DT_I8)@[User::GetBatchid]</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">(DT_I8)@[User::batchid]</property>
+                          name="FriendlyExpression">(DT_I8)@[User::GetBatchid]</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -176,11 +155,11 @@
               </outputs>
             </component>
             <component
-              refId="Package\Extract\Extrace Customers"
+              refId="Package\Extract\Extract From BikeStore"
               componentClassID="Microsoft.OLEDBSource"
               contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
               description="OLE DB Source"
-              name="Extrace Customers"
+              name="Extract From BikeStore"
               usesDispositions="true"
               version="7">
               <properties>
@@ -200,7 +179,10 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT * FROM sales.customers</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT p.product_id , p.product_name , b.brand_id , b.brand_name , c.category_id ,c.category_name , p.model_year , p.list_price
+FROM production.products p
+LEFT JOIN production.categories c ON p.category_id = c.category_id
+LEFT JOIN production.brands b ON p.brand_id = b.brand_id</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -225,7 +207,7 @@
               </properties>
               <connections>
                 <connection
-                  refId="Package\Extract\Extrace Customers.Connections[OleDbConnection]"
+                  refId="Package\Extract\Extract From BikeStore.Connections[OleDbConnection]"
                   connectionManagerID="{739CE111-8D4E-452C-809E-EDCD0345BCFA}:external"
                   connectionManagerRefId="Project.ConnectionManagers[BikeStore]"
                   description="The OLE DB runtime connection used to access the database."
@@ -233,239 +215,197 @@
               </connections>
               <outputs>
                 <output
-                  refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output]"
+                  refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output]"
                   name="OLE DB Source Output">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[customer_id]"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[product_id]"
                       dataType="i4"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[customer_id]"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[customer_id]"
-                      name="customer_id"
+                      externalMetadataColumnId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[product_id]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[product_id]"
+                      name="product_id"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[first_name]"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[product_name]"
                       codePage="1252"
                       dataType="str"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[first_name]"
+                      externalMetadataColumnId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[product_name]"
                       length="255"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[first_name]"
-                      name="first_name"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[product_name]"
+                      name="product_name"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[last_name]"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[brand_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[brand_id]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[brand_id]"
+                      name="brand_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[brand_name]"
                       codePage="1252"
                       dataType="str"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[last_name]"
+                      externalMetadataColumnId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[brand_name]"
                       length="255"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[last_name]"
-                      name="last_name"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[brand_name]"
+                      name="brand_name"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[phone]"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[category_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[category_id]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[category_id]"
+                      name="category_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[category_name]"
                       codePage="1252"
                       dataType="str"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[phone]"
-                      length="25"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[phone]"
-                      name="phone"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[email]"
-                      codePage="1252"
-                      dataType="str"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[email]"
+                      externalMetadataColumnId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[category_name]"
                       length="255"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[email]"
-                      name="email"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[category_name]"
+                      name="category_name"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[street]"
-                      codePage="1252"
-                      dataType="str"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[model_year]"
+                      dataType="i2"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[street]"
-                      length="255"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[street]"
-                      name="street"
+                      externalMetadataColumnId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[model_year]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[model_year]"
+                      name="model_year"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[city]"
-                      codePage="1252"
-                      dataType="str"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[list_price]"
+                      dataType="numeric"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[city]"
-                      length="50"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[city]"
-                      name="city"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[state]"
-                      codePage="1252"
-                      dataType="str"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[state]"
-                      length="25"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[state]"
-                      name="state"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[zip_code]"
-                      codePage="1252"
-                      dataType="str"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[zip_code]"
-                      length="5"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[zip_code]"
-                      name="zip_code"
+                      externalMetadataColumnId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[list_price]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[list_price]"
+                      name="list_price"
+                      precision="10"
+                      scale="2"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[customer_id]"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[product_id]"
                       dataType="i4"
-                      name="customer_id" />
+                      name="product_id" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[first_name]"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[product_name]"
                       codePage="1252"
                       dataType="str"
                       length="255"
-                      name="first_name" />
+                      name="product_name" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[last_name]"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[brand_id]"
+                      dataType="i4"
+                      name="brand_id" />
+                    <externalMetadataColumn
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[brand_name]"
                       codePage="1252"
                       dataType="str"
                       length="255"
-                      name="last_name" />
+                      name="brand_name" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[phone]"
-                      codePage="1252"
-                      dataType="str"
-                      length="25"
-                      name="phone" />
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[category_id]"
+                      dataType="i4"
+                      name="category_id" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[email]"
-                      codePage="1252"
-                      dataType="str"
-                      length="255"
-                      name="email" />
-                    <externalMetadataColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[street]"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[category_name]"
                       codePage="1252"
                       dataType="str"
                       length="255"
-                      name="street" />
+                      name="category_name" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[city]"
-                      codePage="1252"
-                      dataType="str"
-                      length="50"
-                      name="city" />
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[model_year]"
+                      dataType="i2"
+                      name="model_year" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[state]"
-                      codePage="1252"
-                      dataType="str"
-                      length="25"
-                      name="state" />
-                    <externalMetadataColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].ExternalColumns[zip_code]"
-                      codePage="1252"
-                      dataType="str"
-                      length="5"
-                      name="zip_code" />
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].ExternalColumns[list_price]"
+                      dataType="numeric"
+                      name="list_price"
+                      precision="10"
+                      scale="2" />
                   </externalMetadataColumns>
                 </output>
                 <output
-                  refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output]"
+                  refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output]"
                   isErrorOut="true"
                   name="OLE DB Source Error Output">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[customer_id]"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[product_id]"
                       dataType="i4"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[customer_id]"
-                      name="customer_id" />
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[product_id]"
+                      name="product_id" />
                     <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[first_name]"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[product_name]"
                       codePage="1252"
                       dataType="str"
                       length="255"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[first_name]"
-                      name="first_name" />
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[product_name]"
+                      name="product_name" />
                     <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[last_name]"
-                      codePage="1252"
-                      dataType="str"
-                      length="255"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[last_name]"
-                      name="last_name" />
-                    <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[phone]"
-                      codePage="1252"
-                      dataType="str"
-                      length="25"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[phone]"
-                      name="phone" />
-                    <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[email]"
-                      codePage="1252"
-                      dataType="str"
-                      length="255"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[email]"
-                      name="email" />
-                    <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[street]"
-                      codePage="1252"
-                      dataType="str"
-                      length="255"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[street]"
-                      name="street" />
-                    <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[city]"
-                      codePage="1252"
-                      dataType="str"
-                      length="50"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[city]"
-                      name="city" />
-                    <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[state]"
-                      codePage="1252"
-                      dataType="str"
-                      length="25"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[state]"
-                      name="state" />
-                    <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[zip_code]"
-                      codePage="1252"
-                      dataType="str"
-                      length="5"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[zip_code]"
-                      name="zip_code" />
-                    <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[brand_id]"
                       dataType="i4"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[brand_id]"
+                      name="brand_id" />
+                    <outputColumn
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[brand_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[brand_name]"
+                      name="brand_name" />
+                    <outputColumn
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[category_id]"
+                      dataType="i4"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[category_id]"
+                      name="category_id" />
+                    <outputColumn
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[category_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[category_name]"
+                      name="category_name" />
+                    <outputColumn
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[model_year]"
+                      dataType="i2"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[model_year]"
+                      name="model_year" />
+                    <outputColumn
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[list_price]"
+                      dataType="numeric"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[list_price]"
+                      name="list_price"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      refId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -474,11 +414,11 @@
               </outputs>
             </component>
             <component
-              refId="Package\Extract\Load Customers"
+              refId="Package\Extract\Load On Stage"
               componentClassID="Microsoft.OLEDBDestination"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
               description="OLE DB Destination"
-              name="Load Customers"
+              name="Load On Stage"
               usesDispositions="true"
               version="4">
               <properties>
@@ -489,7 +429,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">[dbo].[stg_bikestore_customer]</property>
+                  name="OpenRowset">[BikeStore].[stg_product]</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -531,7 +471,7 @@
               </properties>
               <connections>
                 <connection
-                  refId="Package\Extract\Load Customers.Connections[OleDbConnection]"
+                  refId="Package\Extract\Load On Stage.Connections[OleDbConnection]"
                   connectionManagerID="{A724686B-3215-46D3-937C-F15C1941CFC4}:external"
                   connectionManagerRefId="Project.ConnectionManagers[StageDB]"
                   description="The OLE DB runtime connection used to access the database."
@@ -539,179 +479,152 @@
               </connections>
               <inputs>
                 <input
-                  refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input]"
+                  refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input]"
                   errorOrTruncationOperation="Insert"
                   errorRowDisposition="FailComponent"
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].Columns[customer_id]"
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].Columns[product_id]"
                       cachedDataType="i4"
-                      cachedName="customer_id"
-                      externalMetadataColumnId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[customer_id]" />
+                      cachedName="product_id"
+                      externalMetadataColumnId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[product_id]" />
                     <inputColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].Columns[first_name]"
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].Columns[product_name]"
                       cachedCodepage="1252"
                       cachedDataType="str"
                       cachedLength="255"
-                      cachedName="first_name"
-                      externalMetadataColumnId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[first_name]"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[first_name]" />
+                      cachedName="product_name"
+                      externalMetadataColumnId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[product_name]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[product_name]" />
                     <inputColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].Columns[last_name]"
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].Columns[brand_id]"
+                      cachedDataType="i4"
+                      cachedName="brand_id"
+                      externalMetadataColumnId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[brand_id]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[brand_id]" />
+                    <inputColumn
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].Columns[brand_name]"
                       cachedCodepage="1252"
                       cachedDataType="str"
                       cachedLength="255"
-                      cachedName="last_name"
-                      externalMetadataColumnId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[last_name]"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[last_name]" />
+                      cachedName="brand_name"
+                      externalMetadataColumnId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[brand_name]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[brand_name]" />
                     <inputColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].Columns[phone]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="25"
-                      cachedName="phone"
-                      externalMetadataColumnId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[phone]"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[phone]" />
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].Columns[category_id]"
+                      cachedDataType="i4"
+                      cachedName="category_id"
+                      externalMetadataColumnId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[category_id]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[category_id]" />
                     <inputColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].Columns[email]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="255"
-                      cachedName="email"
-                      externalMetadataColumnId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[email]"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[email]" />
-                    <inputColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].Columns[street]"
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].Columns[category_name]"
                       cachedCodepage="1252"
                       cachedDataType="str"
                       cachedLength="255"
-                      cachedName="street"
-                      externalMetadataColumnId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[street]"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[street]" />
+                      cachedName="category_name"
+                      externalMetadataColumnId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[category_name]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[category_name]" />
                     <inputColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].Columns[city]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="city"
-                      externalMetadataColumnId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[city]"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[city]" />
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].Columns[model_year]"
+                      cachedDataType="i2"
+                      cachedName="model_year"
+                      externalMetadataColumnId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[model_year]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[model_year]" />
                     <inputColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].Columns[state]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="25"
-                      cachedName="state"
-                      externalMetadataColumnId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[state]"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[state]" />
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].Columns[list_price]"
+                      cachedDataType="numeric"
+                      cachedName="list_price"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[list_price]"
+                      lineageId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output].Columns[list_price]" />
                     <inputColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].Columns[zip_code]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="5"
-                      cachedName="zip_code"
-                      externalMetadataColumnId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[zip_code]"
-                      lineageId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output].Columns[zip_code]" />
-                    <inputColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].Columns[load_datetime]"
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].Columns[load_datetime]"
                       cachedDataType="dbDate"
                       cachedName="load_datetime"
-                      externalMetadataColumnId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[load_datetime]"
+                      externalMetadataColumnId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[load_datetime]"
                       lineageId="Package\Extract\Derived Column.Outputs[Derived Column Output].Columns[load_datetime]" />
                     <inputColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].Columns[batchid]"
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].Columns[batch_id]"
                       cachedDataType="i8"
-                      cachedName="batchid"
-                      externalMetadataColumnId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[batch_id]"
-                      lineageId="Package\Extract\Derived Column.Outputs[Derived Column Output].Columns[batchid]" />
+                      cachedName="batch_id"
+                      externalMetadataColumnId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[batch_id]"
+                      lineageId="Package\Extract\Derived Column.Outputs[Derived Column Output].Columns[batch_id]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
                       dataType="i4"
-                      name="customer_id" />
+                      name="product_id" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[first_name]"
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[product_name]"
                       codePage="1252"
                       dataType="str"
                       length="255"
-                      name="first_name" />
+                      name="product_name" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[last_name]"
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[brand_id]"
+                      dataType="i4"
+                      name="brand_id" />
+                    <externalMetadataColumn
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[brand_name]"
                       codePage="1252"
                       dataType="str"
                       length="255"
-                      name="last_name" />
+                      name="brand_name" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[phone]"
-                      codePage="1252"
-                      dataType="str"
-                      length="125"
-                      name="phone" />
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[category_id]"
+                      dataType="i4"
+                      name="category_id" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[email]"
-                      codePage="1252"
-                      dataType="str"
-                      length="255"
-                      name="email" />
-                    <externalMetadataColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[street]"
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[category_name]"
                       codePage="1252"
                       dataType="str"
                       length="255"
-                      name="street" />
+                      name="category_name" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[city]"
-                      codePage="1252"
-                      dataType="str"
-                      length="100"
-                      name="city" />
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[model_year]"
+                      dataType="i4"
+                      name="model_year" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[state]"
-                      codePage="1252"
-                      dataType="str"
-                      length="100"
-                      name="state" />
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[list_price]"
+                      dataType="numeric"
+                      name="list_price"
+                      precision="10"
+                      scale="2" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[zip_code]"
-                      codePage="1252"
-                      dataType="str"
-                      length="120"
-                      name="zip_code" />
-                    <externalMetadataColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[batch_id]"
-                      dataType="i8"
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[batch_id]"
+                      dataType="i4"
                       name="batch_id" />
                     <externalMetadataColumn
-                      refId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input].ExternalColumns[load_datetime]"
-                      dataType="dbTimeStamp2"
-                      name="load_datetime"
-                      scale="7" />
+                      refId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input].ExternalColumns[load_datetime]"
+                      dataType="dbTimeStamp"
+                      name="load_datetime" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
               <outputs>
                 <output
-                  refId="Package\Extract\Load Customers.Outputs[OLE DB Destination Error Output]"
+                  refId="Package\Extract\Load On Stage.Outputs[OLE DB Destination Error Output]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="OLE DB Destination Error Output"
-                  synchronousInputId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input]">
+                  synchronousInputId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Extract\Load Customers.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      refId="Package\Extract\Load On Stage.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Extract\Load Customers.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      lineageId="Package\Extract\Load On Stage.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Extract\Load Customers.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      refId="Package\Extract\Load On Stage.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Extract\Load Customers.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\Extract\Load On Stage.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -723,16 +636,38 @@
           <paths>
             <path
               refId="Package\Extract.Paths[Derived Column Output]"
-              endId="Package\Extract\Load Customers.Inputs[OLE DB Destination Input]"
+              endId="Package\Extract\Load On Stage.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Extract\Derived Column.Outputs[Derived Column Output]" />
             <path
               refId="Package\Extract.Paths[OLE DB Source Output]"
               endId="Package\Extract\Derived Column.Inputs[Derived Column Input]"
               name="OLE DB Source Output"
-              startId="Package\Extract\Extrace Customers.Outputs[OLE DB Source Output]" />
+              startId="Package\Extract\Extract From BikeStore.Outputs[OLE DB Source Output]" />
           </paths>
         </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get Batchid"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3C93AB64-2888-43A0-9947-98D7F384C847}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Batchid"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A724686B-3215-46D3-937C-F15C1941CFC4}"
+          SQLTask:SqlStatementSource="DECLARE @NewBatchID BIGINT;&#xA;&#xA;IF NOT EXISTS (SELECT 1 FROM bikestore.stg_product)&#xA;    SET @NewBatchID = 1;&#xA;ELSE&#xA;    SELECT @NewBatchID = MAX(batch_id) + 1 &#xA;&#x9;FROM bikestore.stg_product;&#xA;&#xA;SELECT @NewBatchID AS NewBatchID;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::GetBatchid" />
+        </SQLTask:SqlTaskData>
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -740,19 +675,19 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{6DB08755-F3E3-4979-8B51-855603241A0D}"
-      DTS:From="Package\BatchId"
+      DTS:DTSID="{833A0350-1E43-4ECC-BB7A-26460222C9E2}"
+      DTS:From="Package\Get Batchid"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
       DTS:To="Package\Extract" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{E21DE9A1-D101-4A67-9D27-DD36F76FF856}"
+      DTS:DTSID="{2FD6D5D8-DC66-4BB4-A130-471B7F1509F5}"
       DTS:From="Package\Delete Batch"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
-      DTS:To="Package\BatchId" />
+      DTS:To="Package\Get Batchid" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -767,43 +702,43 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="114.4,41.6"
-          Id="Package\BatchId"
-          TopLeft="239.285714795091,185.823529248883" />
-        <NodeLayout
           Size="138.4,41.6"
           Id="Package\Delete Batch"
-          TopLeft="97.1428573496487,76.4705881682647" />
+          TopLeft="96.4285716338425,57.3529411261985" />
         <NodeLayout
           Size="111.2,41.6"
           Id="Package\Extract"
-          TopLeft="345.714286450221,287.529411512675" />
+          TopLeft="332.857143565708,287.529411512675" />
+        <NodeLayout
+          Size="132.8,41.6"
+          Id="Package\Get Batchid"
+          TopLeft="241.428571942509,159.823529271673" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="296.485714795091,227.423529248883">
+          TopLeft="307.828571942509,201.423529271673">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="104.82857165513,60.105882263792"
+              EndConnector="80.6285716231988,86.1058822410019"
               Start="0,0"
-              End="104.82857165513,52.605882263792">
+              End="80.6285716231988,78.6058822410019">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,26.052941131896" />
+                    End="0,39.0529411205009" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,26.052941131896"
-                    Point2="0,30.052941131896"
-                    Point3="4,30.052941131896" />
+                    Point1="0,39.0529411205009"
+                    Point2="0,43.0529411205009"
+                    Point3="4,43.0529411205009" />
                   <mssgle:LineSegment
-                    End="100.82857165513,30.052941131896" />
+                    End="76.6285716231988,43.0529411205009" />
                   <mssgle:CubicBezierSegment
-                    Point1="100.82857165513,30.052941131896"
-                    Point2="104.82857165513,30.052941131896"
-                    Point3="104.82857165513,34.052941131896" />
+                    Point1="76.6285716231988,43.0529411205009"
+                    Point2="80.6285716231988,43.0529411205009"
+                    Point3="80.6285716231988,47.0529411205009" />
                   <mssgle:LineSegment
-                    End="104.82857165513,52.605882263792" />
+                    End="80.6285716231988,78.6058822410019" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -814,30 +749,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="166.342857349649,118.070588168265">
+          TopLeft="165.628571633843,98.9529411261985">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="130.142857445442,67.7529410806185"
+              EndConnector="142.200000308667,60.8705881454747"
               Start="0,0"
-              End="130.142857445442,60.2529410806185">
+              End="142.200000308667,53.3705881454747">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,29.8764705403092" />
+                    End="0,26.4352940727373" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,29.8764705403092"
-                    Point2="0,33.8764705403092"
-                    Point3="4,33.8764705403092" />
+                    Point1="0,26.4352940727373"
+                    Point2="0,30.4352940727373"
+                    Point3="4,30.4352940727373" />
                   <mssgle:LineSegment
-                    End="126.142857445442,33.8764705403092" />
+                    End="138.200000308667,30.4352940727373" />
                   <mssgle:CubicBezierSegment
-                    Point1="126.142857445442,33.8764705403092"
-                    Point2="130.142857445442,33.8764705403092"
-                    Point3="130.142857445442,37.8764705403092" />
+                    Point1="138.200000308667,30.4352940727373"
+                    Point2="142.200000308667,30.4352940727373"
+                    Point3="142.200000308667,34.4352940727373" />
                   <mssgle:LineSegment
-                    End="130.142857445442,60.2529410806185" />
+                    End="142.200000308667,53.3705881454747" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -855,43 +790,43 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="153.6,41.6"
-          Id="Package\Extract\Load Customers"
-          TopLeft="151.428571750923,311.235293844837" />
+          Size="148,41.6"
+          Id="Package\Extract\Load On Stage"
+          TopLeft="192.142857551879,249.294117428543" />
         <NodeLayout
           Size="152.8,41.6"
           Id="Package\Extract\Derived Column"
-          TopLeft="215.000000457679,172.823529260278" />
+          TopLeft="258.571429121859,154.470588099895" />
         <NodeLayout
-          Size="166.4,41.6"
-          Id="Package\Extract\Extrace Customers"
-          TopLeft="181.428571814785,53.5294117177853" />
+          Size="186.4,41.6"
+          Id="Package\Extract\Extract From BikeStore"
+          TopLeft="178.57142895156,52.7647058361026" />
         <EdgeLayout
-          Id="Package\Extract.Paths[OLE DB Source Output]"
-          TopLeft="264.628571814785,95.1294117177853">
+          Id="Package\Extract.Paths[Derived Column Output]"
+          TopLeft="334.971429121859,196.070588099895">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="26.7714286428936,77.6941175424929"
+              EndConnector="-68.8285715699797,53.2235293286481"
               Start="0,0"
-              End="26.7714286428936,70.1941175424929">
+              End="-68.8285715699797,45.7235293286481">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,34.8470587712465" />
+                    End="0,22.6117646643241" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,34.8470587712465"
-                    Point2="0,38.8470587712465"
-                    Point3="4,38.8470587712465" />
+                    Point1="0,22.6117646643241"
+                    Point2="0,26.6117646643241"
+                    Point3="-4,26.6117646643241" />
                   <mssgle:LineSegment
-                    End="22.7714286428936,38.8470587712465" />
+                    End="-64.8285715699797,26.6117646643241" />
                   <mssgle:CubicBezierSegment
-                    Point1="22.7714286428936,38.8470587712465"
-                    Point2="26.7714286428936,38.8470587712465"
-                    Point3="26.7714286428936,42.8470587712465" />
+                    Point1="-64.8285715699797,26.6117646643241"
+                    Point2="-68.8285715699797,26.6117646643241"
+                    Point3="-68.8285715699797,30.6117646643241" />
                   <mssgle:LineSegment
-                    End="26.7714286428936,70.1941175424929" />
+                    End="-68.8285715699797,45.7235293286481" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -901,31 +836,31 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Extract.Paths[Derived Column Output]"
-          TopLeft="291.400000457679,214.423529260278">
+          Id="Package\Extract.Paths[OLE DB Source Output]"
+          TopLeft="271.77142895156,94.3647058361026">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-63.1714287067559,96.811764584559"
+              EndConnector="63.2000001702985,60.105882263792"
               Start="0,0"
-              End="-63.1714287067559,89.311764584559">
+              End="63.2000001702985,52.605882263792">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,44.4058822922795" />
+                    End="0,26.052941131896" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,44.4058822922795"
-                    Point2="0,48.4058822922795"
-                    Point3="-4,48.4058822922795" />
+                    Point1="0,26.052941131896"
+                    Point2="0,30.052941131896"
+                    Point3="4,30.052941131896" />
                   <mssgle:LineSegment
-                    End="-59.1714287067559,48.4058822922795" />
+                    End="59.2000001702985,30.052941131896" />
                   <mssgle:CubicBezierSegment
-                    Point1="-59.1714287067559,48.4058822922795"
-                    Point2="-63.1714287067559,48.4058822922795"
-                    Point3="-63.1714287067559,52.4058822922795" />
+                    Point1="59.2000001702985,30.052941131896"
+                    Point2="63.2000001702985,30.052941131896"
+                    Point3="63.2000001702985,34.052941131896" />
                   <mssgle:LineSegment
-                    End="-63.1714287067559,89.311764584559" />
+                    End="63.2000001702985,52.605882263792" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -938,7 +873,7 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Extract\Load Customers">
+    design-time-name="Package\Extract\Load On Stage">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -951,7 +886,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Extract\Extrace Customers">
+    design-time-name="Package\Extract\Extract From BikeStore">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

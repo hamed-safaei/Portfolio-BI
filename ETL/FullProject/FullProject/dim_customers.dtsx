@@ -11,36 +11,10 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package3"
   DTS:PackageType="5"
-  DTS:VersionBuild="19"
-  DTS:VersionGUID="{D064CA3C-219A-485C-A251-38C226B852C3}">
+  DTS:VersionBuild="20"
+  DTS:VersionGUID="{1F207CF1-C1F8-4631-AA09-CD47789DB6BB}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[DW]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{E05F228F-B3C1-4992-9547-9ACB689F1AB5}"
-      DTS:ObjectName="DW">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=DESKTOP-R92IV14\FULLBIPROJECT;Initial Catalog=DW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package3-{E05F228F-B3C1-4992-9547-9ACB689F1AB5}DESKTOP-R92IV14\FULLBIPROJECT;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[StageDB]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{D0889B70-9BF5-4439-962A-937E4F1FB4B9}"
-      DTS:ObjectName="StageDB">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=DESKTOP-R92IV14\FULLBIPROJECT;Initial Catalog=StageDB;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package3-{D0889B70-9BF5-4439-962A-937E4F1FB4B9}DESKTOP-R92IV14\FULLBIPROJECT;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-  </DTS:ConnectionManagers>
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
@@ -274,8 +248,8 @@
               <connections>
                 <connection
                   refId="Package\Data Flow Task\Insert Destination.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[DW]"
-                  connectionManagerRefId="Package.ConnectionManagers[DW]"
+                  connectionManagerID="{E05F228F-B3C1-4992-9547-9ACB689F1AB5}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DW]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -481,8 +455,8 @@
               <connections>
                 <connection
                   refId="Package\Data Flow Task\OLE DB Command.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[DW]"
-                  connectionManagerRefId="Package.ConnectionManagers[DW]"
+                  connectionManagerID="{E05F228F-B3C1-4992-9547-9ACB689F1AB5}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DW]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -593,8 +567,8 @@
               <connections>
                 <connection
                   refId="Package\Data Flow Task\OLE DB Command 1.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[DW]"
-                  connectionManagerRefId="Package.ConnectionManagers[DW]"
+                  connectionManagerID="{E05F228F-B3C1-4992-9547-9ACB689F1AB5}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DW]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -856,8 +830,8 @@
               <connections>
                 <connection
                   refId="Package\Data Flow Task\OLE DB Command 2.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[DW]"
-                  connectionManagerRefId="Package.ConnectionManagers[DW]"
+                  connectionManagerID="{E05F228F-B3C1-4992-9547-9ACB689F1AB5}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DW]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1079,8 +1053,8 @@
               <connections>
                 <connection
                   refId="Package\Data Flow Task\Slowly Changing Dimension.Connections[LookupConnection]"
-                  connectionManagerID="Package.ConnectionManagers[DW]"
-                  connectionManagerRefId="Package.ConnectionManagers[DW]"
+                  connectionManagerID="{E05F228F-B3C1-4992-9547-9ACB689F1AB5}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DW]"
                   description="Defines the connection to use for lookups in the dimension table"
                   name="LookupConnection" />
               </connections>
@@ -1387,8 +1361,8 @@ WHERE load_datetime = ?</property>
               <connections>
                 <connection
                   refId="Package\Data Flow Task\Stage.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[StageDB]"
-                  connectionManagerRefId="Package.ConnectionManagers[StageDB]"
+                  connectionManagerID="{D0889B70-9BF5-4439-962A-937E4F1FB4B9}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[StageDB]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
